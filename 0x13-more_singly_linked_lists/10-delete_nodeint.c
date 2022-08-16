@@ -4,41 +4,40 @@
 #include "lists.h"
 
 /**
-* insert_nodeint_at_index - function that inserts new node at a given position
-* @head: a pointer to a pointer to a struct
-* @idx: is the index of the list where the new node should be added.
-* @n: the data for the new node
-* Return: the address of the new node, or NULL if it failed
+* delete_nodeint_at_index - a function that deletes the node at
+*index index of a listint_t linked list.
+* @head: a pointer to a pointer point to head of list
+* @index: the index of the node that should be deleted
+* Return: 1 if it succeeded, -1 if it failed
 */
 
-listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
+int delete_nodeint_at_index(listint_t **head, unsigned int index)
 {
-	listint_t *next_ptr;
 	listint_t *previous_ptr;
-	listint_t *new_node;
+	listint_t *next_ptr;
 	unsigned int i;
 
-	if (head == NULL)
-		return (NULL);
+	if (head == NULL || *head == NULL)
+		return (-1);
+
 	next_ptr = *head;
 	previous_ptr = NULL;
-	for (i = 0; i < idx; i += 1)
+	if (index == 0)
+	{
+		*head = (*head)->next;
+		free(next_ptr);
+		return (1);
+	}
+	for (i = 0; i < index; i += 1)
 	{
 		if (next_ptr == NULL)
-			return (NULL);
+			return (-1);
 		previous_ptr = next_ptr;
 		next_ptr = next_ptr->next;
 	}
+	if (previous_ptr)
+		previous_ptr->next = next_ptr->next;
+	free(next_ptr);
 
-	new_node = malloc(sizeof(listint_t));
-	if (!new_node)
-		return (NULL);
-	new_node->n = n;
-	new_node->next = next_ptr;
-	if (idx == 0)
-		*head = new_node;
-	else
-		previous_ptr->next = new_node;
-
-	return (new_node);
+	return (1);
 }
