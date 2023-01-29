@@ -1,3 +1,1 @@
-# 0x1E-search_algorithms
-#AUTHOR
-Umar Faruq Adam<umarfaruqadam03@gmail.com>
+# Solutions to tasks on 0x1E. C - Search Algorithms
